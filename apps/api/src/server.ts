@@ -6,6 +6,9 @@ import authRoutes, { requireUser } from "./routes/auth.js";
 import meRoutes from "./routes/me.js";
 import { registerOnboardingRoutes } from "./routes/onboarding.js";
 import { registerCvBuilderRoutes } from "./routes/cv-builder.js";
+import { registerOfferRoutes } from "./routes/offers.js";
+import { registerExportRoutes } from "./routes/export.js";
+import { registerJobRoutes } from "./routes/jobs.js";
 
 const PORT = Number(process.env.API_PORT ?? 8781);
 const HOST = "0.0.0.0";
@@ -36,6 +39,9 @@ await app.register(authRoutes, { prefix: "/api" });
 await app.register(meRoutes, { prefix: "/api" });
 await app.register(registerOnboardingRoutes, { prefix: "/api" });
 await app.register(registerCvBuilderRoutes, { prefix: "/api" });
+await app.register(registerOfferRoutes, { prefix: "/api" });
+await app.register(registerExportRoutes, { prefix: "/api" });
+await app.register(registerJobRoutes, { prefix: "/api" });
 
 app.setErrorHandler((err, _req, reply) => {
   const e = err as Error & { statusCode?: number };

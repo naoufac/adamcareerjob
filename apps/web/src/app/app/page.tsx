@@ -41,6 +41,25 @@ export default function AppHome() {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Link
+          href="/app/offers/new"
+          className="group rounded-xl border-2 border-adam bg-adam/5 p-6 shadow-sm transition hover:shadow-md"
+        >
+          <div className="mb-2 inline-flex rounded-lg bg-adam px-3 py-1 text-xs font-semibold text-white">
+            PRINCIPAL
+          </div>
+          <h2 className="text-lg font-semibold text-slate-900">
+            Adapter a une offre
+          </h2>
+          <p className="mt-1 text-sm text-slate-500">
+            Collez une offre. Adam recherche l'entreprise, adapte votre CV et
+            votre lettre, et vous montre chaque changement a valider.
+          </p>
+          <span className="mt-3 inline-block text-sm font-medium text-adam group-hover:underline">
+            Commencer &rarr;
+          </span>
+        </Link>
+
+        <Link
           href="/app/builder"
           className="group rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-adam hover:shadow-md"
         >
@@ -75,13 +94,29 @@ export default function AppHome() {
           </span>
         </Link>
 
-        <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 sm:col-span-2">
+        <Link
+          href="/app/jobs"
+          className="group rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-adam hover:shadow-md"
+        >
+          <h2 className="text-lg font-semibold text-slate-900">
+            Rechercher des offres
+          </h2>
+          <p className="mt-1 text-sm text-slate-500">
+            Trouvez des offres canadiennes et voyez votre score de
+            correspondance avec chaque poste.
+          </p>
+          <span className="mt-3 inline-block text-sm font-medium text-adam group-hover:underline">
+            Rechercher &rarr;
+          </span>
+        </Link>
+
+        <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
             Bientot disponible
           </h2>
           <p className="mt-1 text-sm text-slate-500">
-            Adaptation d&apos;une offre, lettre d&apos;accompagnement,
-            recherche quotidienne d&apos;offres.
+            Export PDF/DOCX, tableau de bord de candidatures, suivi des
+            performances.
           </p>
         </div>
       </div>
