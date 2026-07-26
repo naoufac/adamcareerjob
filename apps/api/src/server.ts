@@ -16,6 +16,8 @@ const HOST = "0.0.0.0";
 const allowedOrigins = [
   process.env.APP_BASE_URL,
   process.env.NEXT_PUBLIC_API_BASE_URL,
+  "https://adamcareers.com",
+  "https://www.adamcareers.com",
   "http://localhost:8780",
 ].filter((o): o is string => Boolean(o));
 

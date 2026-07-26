@@ -4,9 +4,40 @@
 
 :root {
   color-scheme: light;
+  --font-inter: "Inter", system-ui, sans-serif;
 }
 
 body {
   background: #f8fafc;
   color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth scroll for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #0f4c5c 0%, #2c7488 50%, #e36414 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Subtle grid pattern background */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(15, 76, 92, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 76, 92, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Glass card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(15, 76, 92, 0.08);
 }
