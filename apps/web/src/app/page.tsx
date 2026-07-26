@@ -1,25 +1,18 @@
-// Server-to-server call uses the internal API_BASE_URL (e.g. http://api:8781 in
-// compose, http://localhost:8781 in local dev). NEXT_PUBLIC_API_BASE_URL is the
-// browser-facing URL reserved for future client-side calls.
+"use client";
+
+import { useEffect } from "react";
+import Link from "next/link";
+import { useAuth } from "@/lib/auth-context";
+
 const API_BASE =
-  process.env.API_BASE_URL ??
-  process.env.NEXT_PUBLIC_API_BASE_URL ??
-  "http://localhost:8781";
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8781";
 
-async function getApiHealth(): Promise<{ status?: string } | null> {
-  "use server";
-  try {
-    const res = await fetch(`${API_BASE}/healthz`, { cache: "no-store" });
-    if (!res.ok) return null;
-    return (await res.json()) as { status?: string };
-  } catch {
-    return null;
-  }
-}
+export default function Home() {
+  const { user, loading } = useAuth();
 
-export default async function Home() {
-  const health = await getApiHealth();
-  const apiOk = health?.status === "ok";
+  useEffect(() => {
+    if (!loading && user) window.location.href = "/app";
+  }, [loading, user]);
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
@@ -37,19 +30,25 @@ export default async function Home() {
       </header>
 
       <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="flex items-center gap-3">
-          <span
-            className={`inline-block h-3 w-3 rounded-full ${
-              apiOk ? "bg-green-500" : "bg-red-500"
-            }`}
-          />
-          <p className="font-mono text-sm">
-            API: {apiOk ? "en ligne" : "hors ligne"} ({API_BASE})
-          </p>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/auth"
+            className="rounded-lg bg-adam px-6 py-3 font-semibold text-white transition hover:bg-adam/90"
+          >
+            Commencer
+          </Link>
+          <a
+            href={`${API_BASE}/healthz`}
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm text-slate-500 underline"
+          >
+            Etat de l&apos;API
+          </a>
         </div>
-        <p className="mt-3 text-sm text-slate-500">
-          Etat M0: echafaudage. Prochaines etapes: auth (Composio + email),
-          onboarding CV, puis le constructeur de CV canadien rapide.
+        <p className="mt-4 text-sm text-slate-500">
+          Constructeur de CV canadien, import de CV, scores de conformite et ATS
+          en temps reel.
         </p>
       </section>
     </main>

@@ -1,9 +1,14 @@
-import "dotenv/config";
+import "./env.js";
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import cookie from "@fastify/cookie";
+import authRoutes, { requireUser } from "./routes/auth.js";
+import meRoutes from "./routes/me.js";
+import { registerOnboardingRoutes } from "./routes/onboarding.js";
+import { registerCvBuilderRoutes } from "./routes/cv-builder.js";
 
 const PORT = Number(process.env.API_PORT ?? 8781);
-const HOST = process.env.NODE_ENV === "production" ? "0.0.0.0" : "0.0.0.0";
+const HOST = "0.0.0.0";
 
 const allowedOrigins = [
   process.env.APP_BASE_URL,
@@ -17,17 +22,31 @@ await app.register(cors, {
   origin: allowedOrigins,
   credentials: true,
 });
+await app.register(cookie);
 
-app.get("/healthz", async () => {
-  return {
-    status: "ok",
-    service: "adamjobs-api",
-    time: new Date().toISOString(),
-  };
+app.get("/healthz", async () => ({
+  status: "ok",
+  service: "adamjobs-api",
+  time: new Date().toISOString(),
+}));
+
+app.get("/", async () => ({ name: "adamjobs-api", version: "0.1.0" }));
+
+await app.register(authRoutes, { prefix: "/api" });
+await app.register(meRoutes, { prefix: "/api" });
+await app.register(registerOnboardingRoutes, { prefix: "/api" });
+await app.register(registerCvBuilderRoutes, { prefix: "/api" });
+
+app.setErrorHandler((err, _req, reply) => {
+  const e = err as Error & { statusCode?: number };
+  const status = e.statusCode ?? 500;
+  if (status >= 500) app.log.error(err);
+  reply.code(status).send({ error: e.message });
 });
 
-app.get("/", async () => {
-  return { name: "adamjobs-api", version: "0.1.0" };
+app.get("/api/_session", async (req) => {
+  const user = await requireUser(req);
+  return { user };
 });
 
 const start = async () => {
