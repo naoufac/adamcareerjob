@@ -1,0 +1,22 @@
+{
+  "name": "adamjobs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ADAMJOBS - Canadian CV and cover-letter adaptation platform",
+  "packageManager": "pnpm@11.2.2",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "build": "pnpm -r run build",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "pnpm -r run test",
+    "lint": "pnpm -r run lint",
+    "verify": "pnpm -r run typecheck && pnpm -r run build",
+    "gate": "pnpm run verify"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,31 @@
+# ADAMJOBS edge config for Caddy (shared host edge).
+#
+# Drop these two site blocks into the host's Caddyfile and reload Caddy.
+# The sslip hosts work immediately (no DNS needed); swap in real domains
+# once the user lands their DNS zones. Caddy auto-issues TLS for real domains.
+#
+# adamjobs-api and adamjobs-web are the compose service names; from Caddy's
+# perspective they are reached on the host loopback at the published ports:
+#   web -> 127.0.0.1:8780   api -> 127.0.0.1:8781
+
+# --- Web (Next.js) ---
+adam.135.181.44.161.sslip.io {
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:8780
+}
+
+# --- API (Fastify) ---
+api.adam.135.181.44.161.sslip.io {
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:8781
+}
+
+# --- When real domains land, mirror the above, e.g.:
+# adam.example.com {
+# 	encode zstd gzip
+# 	reverse_proxy 127.0.0.1:8780
+# }
+# api.adam.example.com {
+# 	encode zstd gzip
+# 	reverse_proxy 127.0.0.1:8781
+# }
